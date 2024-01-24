@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:ys_play/ys_play.dart';
-import 'package:ys_play_example/ys_player/ys_player_land_scape.dart';
-import 'package:ys_play_example/ys_player/ys_player_portrait.dart';
 
-import '../main.dart';
+import 'package:ys_play/ys_play.dart';
+import 'package:ys_play/src/view/ys_player/ys_player_land_scape.dart';
+import 'package:ys_play/src/view/ys_player/ys_player_portrait.dart';
 
 class YsPlayer extends StatefulWidget {
   final String deviceSerial;
@@ -15,8 +13,10 @@ class YsPlayer extends StatefulWidget {
   final int cameraNo;
   final YsMediaType mediaType;
   final Function(bool)? showOtherUI;
+  final String accessToken;
   const YsPlayer({
     Key? key,
+    required this.accessToken,
     required this.deviceSerial,
     required this.verifyCode,
     this.cameraNo = 1,
@@ -60,9 +60,7 @@ class YsPlayerState extends State<YsPlayer> {
         ysPlayStatus = YsPlayStatus.onError;
         if (mounted) setState(() {});
       },
-      onTalkError: (errorInfo) {
-        showToast(errorInfo);
-      },
+      onTalkError: (errorInfo) {},
     );
   }
 
@@ -124,7 +122,7 @@ class YsPlayerState extends State<YsPlayer> {
   /// 拿到"accessToken"后,传给萤石SDK，实现授权登录。
   /// 否则无法继续回放，直播，对讲等操作。
   Future<void> setAccessToken() async {
-    bool tokenResult = await YsPlay.setAccessToken(accessToken);
+    bool tokenResult = await YsPlay.setAccessToken(widget.accessToken);
     if (tokenResult) {
       // 开始播放
       await startPlay();

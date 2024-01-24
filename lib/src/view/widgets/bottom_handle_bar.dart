@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ys_play/ys_play.dart';
-import 'package:ys_play_example/widgets/full_screen_btn.dart';
-import 'package:ys_play_example/widgets/jk_level_btn.dart';
-import 'package:ys_play_example/widgets/jk_sound_btn.dart';
 
+import 'full_screen_btn.dart';
+import 'jk_level_btn.dart';
 import 'jk_play_btn.dart';
+import 'jk_sound_btn.dart';
 
 class BottomHandleBar extends StatefulWidget {
   final double? width;

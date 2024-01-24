@@ -6,7 +6,6 @@ import 'package:ys_play_example/real_page/screen_record_btn.dart';
 
 import '../main.dart';
 import '../utils/permission_util.dart';
-import '../ys_player/ys_player.dart';
 
 class RealPage extends StatefulWidget {
   const RealPage({Key? key}) : super(key: key);
@@ -130,6 +129,7 @@ class _RealPageState extends State<RealPage> {
           showOtherUI = show;
         });
       },
+      accessToken: accessToken,
     );
 
     return showOtherUI

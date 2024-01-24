@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pickers/pickers.dart';
 import 'package:flutter_pickers/time_picker/model/date_mode.dart';
 import 'package:flutter_pickers/time_picker/model/pduration.dart';
-import 'package:ys_play_example/utils/time_util.dart';
+import 'package:intl/intl.dart';
 
 class TimeSelector extends StatefulWidget {
   final String text;
@@ -64,7 +64,9 @@ class _TimeSelectorState extends State<TimeSelector> {
           t.minute ?? 0,
           t.second ?? 0,
         );
-        time = TimeUtil.timeFormat(dateTime.millisecondsSinceEpoch);
+        time = DateFormat("yyyy-MM-dd HH:mm:ss").format(
+            DateTime.fromMillisecondsSinceEpoch(
+                dateTime.millisecondsSinceEpoch));
         widget.onSelected(time);
         setState(() {});
       },

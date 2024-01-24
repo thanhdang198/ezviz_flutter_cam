@@ -4,6 +4,7 @@ import 'package:ys_play_example/main.dart';
 import 'package:ys_play_example/peiwang/peiwang_page.dart';
 import 'package:ys_play_example/play_back_page.dart';
 import 'package:ys_play_example/real_page/real_page.dart';
+import 'package:ys_play_example/sample_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,6 +62,18 @@ class _HomePageState extends State<HomePage> {
               },
               child: Text(
                 'live streaming',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SampleScreen()),
+                );
+              },
+              child: Text(
+                'Example',
                 style: TextStyle(fontSize: 16),
               ),
             ),

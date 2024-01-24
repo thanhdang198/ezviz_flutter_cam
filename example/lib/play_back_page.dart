@@ -3,8 +3,8 @@ import 'package:oktoast/oktoast.dart';
 import 'package:ys_play/ys_play.dart';
 import 'package:ys_play_example/utils/permission_util.dart';
 import 'package:ys_play_example/utils/time_util.dart';
-import 'package:ys_play_example/widgets/time_selector.dart';
-import 'package:ys_play_example/ys_player/ys_player.dart';
+
+import 'package:ys_play/src/view/ys_player/ys_player.dart';
 
 import 'main.dart';
 
@@ -105,6 +105,7 @@ class PlaybackPageState extends State<PlaybackPage> {
           showOtherUI = show;
         });
       },
+      accessToken: accessToken,
     );
 
     return showOtherUI
