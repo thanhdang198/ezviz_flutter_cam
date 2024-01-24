@@ -1,13 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:camera/camera.dart';
-import 'package:camera/camera_platform_interface.dart';
-import 'package:camera/camera_method_channel.dart';
+import 'package:ezviz_camera/camera.dart';
+import 'package:ezviz_camera/camera_platform_interface.dart';
+import 'package:ezviz_camera/camera_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockCameraPlatform
     with MockPlatformInterfaceMixin
     implements CameraPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }

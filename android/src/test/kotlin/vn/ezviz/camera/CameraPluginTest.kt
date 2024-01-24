@@ -1,4 +1,4 @@
-package vn.ezviz.camera
+package vn.ezviz.ezviz_camera
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

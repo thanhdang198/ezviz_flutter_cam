@@ -7,11 +7,12 @@ import 'camera_platform_interface.dart';
 class MethodChannelCamera extends CameraPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('camera');
+  final methodChannel = const MethodChannel('ezviz_camera');
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
 }

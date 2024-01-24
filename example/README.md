@@ -1,6 +1,6 @@
 # camera_example
 
-Demonstrates how to use the camera plugin.
+Demonstrates how to use the ezviz_camera plugin.
 
 ## Getting Started
 

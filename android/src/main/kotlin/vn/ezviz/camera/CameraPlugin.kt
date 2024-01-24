@@ -1,4 +1,4 @@
-package vn.ezviz.camera
+package vn.ezviz.ezviz_camera
 
 import androidx.annotation.NonNull
 
@@ -18,7 +18,7 @@ class CameraPlugin: FlutterPlugin, MethodCallHandler {
 
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "camera")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "ezviz_camera")
     channel.setMethodCallHandler(this)
   }
 

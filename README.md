@@ -1,4 +1,4 @@
-# camera
+# ezviz_camera
 
 A new Flutter plugin project.
 

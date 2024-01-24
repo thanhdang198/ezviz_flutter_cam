@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint camera.podspec` to validate before publishing.
+# Run `pod lib lint ezviz_camera.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'camera'
+  s.name             = 'ezviz_camera'
   s.version          = '0.0.1'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
