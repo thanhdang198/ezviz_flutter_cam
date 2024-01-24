@@ -11,7 +11,41 @@ Flutter Ys7 (YingShi Cloud) Live Streaming Plugin, supporting Android and IOS.
 6. PTZ (Pan-Tilt-Zoom) control.
 7. Device configuration.
 8. Intercom (includes half-duplex and full-duplex intercom).
+## Usage
 
+- Use this function to get access token by appkey and app secret
+```dart
+    YsAuthentication.getAccessToken(appKey: appKey, appSecret: "");
+ ```
+- Show the playback video
+```dart
+    YsPlayer ysPlayer = YsPlayer(
+        key: ysPlayKey,
+        deviceSerial: deviceSerial,
+        verifyCode: verifyCode,
+        mediaType: YsMediaType.playback,
+        showOtherUI: (show) {
+        setState(() {
+            showOtherUI = show;
+        });
+        },
+    );
+```
+View all demo [here](example/lib/play_back_page.dart)
+- Show live video
+```dart
+    YsPlayer ysPlayer = YsPlayer(
+        deviceSerial: deviceSerial,
+        verifyCode: verifyCode,
+        mediaType: YsMediaType.real,
+        showOtherUI: (show) {
+            setState(() {
+            showOtherUI = show;
+            });
+        },
+    );
+```
+View all demo [here](example/lib/real_page/real_page.dart) 
 ## Preparation
 Before integration, it's recommended to read the [official documentation](http://open.ezvizlife.com/help/36).
 
