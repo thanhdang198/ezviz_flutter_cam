@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ys_play/src/entity/capacity_response_entity.dart';
 import 'package:ys_play/src/entity/ys_request_entity.dart';
 
+import 'entity/ys_authentication_entity.dart';
 import 'entity/ys_response_entity.dart';
 
 class YsHttpApi {
@@ -20,6 +21,37 @@ class YsHttpApi {
   /// 设备能力集
   static const String devCapacity =
       "https://open.ezvizlife.com/api/lapp/device/capacity";
+
+  static const String userAuth =
+      "https://open.ezvizlife.com/api/lapp/token/get";
+
+  /// 开始云台控制
+  static Future<YsAuthenticationResponseEntity> getAccessToken({
+    required String appKey,
+    required String appSecret,
+    int? speed,
+  }) async {
+    FormData formData = FormData.fromMap({
+      "appKey": appKey,
+      "appSecret": appSecret,
+    });
+
+    try {
+      Response response = await Dio().post(userAuth, data: formData);
+      if (response.statusCode == 200) {
+        YsAuthenticationResponseEntity responseData =
+            YsAuthenticationResponseEntity.fromJson(response.data);
+        return responseData;
+      } else {
+        return YsAuthenticationResponseEntity.fromJson({
+          "code": response.statusCode,
+          "msg": response.statusMessage,
+        });
+      }
+    } catch (e) {
+      throw ("Request error:${e.toString()}");
+    }
+  }
 
   /// 开始云台控制
   static Future<YsResponseEntity> devPtzStart({
