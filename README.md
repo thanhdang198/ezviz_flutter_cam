@@ -52,8 +52,11 @@ Before integration, it's recommended to read the [official documentation](http:/
 ## Installation
 Add the following dependency to your `pubspec.yaml` file:
 ```yaml
-dependencies: 
-    ys_play: ^0.0.6
+    dependencies: 
+        ys_play: 
+            git:
+                url: https://github.com/thanhdang198/ezviz_flutter_cam
+                ref: master
 ```
 
 ## Project Configuration
