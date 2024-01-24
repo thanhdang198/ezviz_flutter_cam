@@ -93,6 +93,7 @@ class _SampleScreenState extends State<SampleScreen> {
 
     /// Player hiển thị màn hình camera
     YsPlayer ysPlayer = YsPlayer(
+      isFullScreen: false,
       deviceSerial: deviceSerial,
       verifyCode: verifyCode,
       mediaType: YsMediaType.real,

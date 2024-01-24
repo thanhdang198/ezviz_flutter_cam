@@ -14,11 +14,13 @@ class YsPlayer extends StatefulWidget {
   final YsMediaType mediaType;
   final Function(bool)? showOtherUI;
   final String accessToken;
+  final bool? isFullScreen;
   const YsPlayer({
     Key? key,
     required this.accessToken,
     required this.deviceSerial,
     required this.verifyCode,
+    this.isFullScreen,
     this.cameraNo = 1,
     this.mediaType = YsMediaType.playback,
     this.showOtherUI,
@@ -41,6 +43,7 @@ class YsPlayerState extends State<YsPlayer> {
   String? errorInfo; //播放错误提示
 
   bool get isFullScreen =>
+      widget.isFullScreen ??
       MediaQuery.of(context).orientation == Orientation.landscape;
 
   @override
