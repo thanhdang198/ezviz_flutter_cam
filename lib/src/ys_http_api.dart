@@ -7,18 +7,19 @@ import 'entity/ys_response_entity.dart';
 class YsHttpApi {
   /// 开始云台控制
   static const String ptzStart =
-      "https://open.ys7.com/api/lapp/device/ptz/start";
+      "https://open.ezvizlife.com/api/lapp/device/ptz/start";
 
   /// 关闭云台控制
-  static const String ptzStop = "https://open.ys7.com/api/lapp/device/ptz/stop";
+  static const String ptzStop =
+      "https://open.ezvizlife.com/api/lapp/device/ptz/stop";
 
   /// 镜像翻转
   static const String ptzMirror =
-      "https://open.ys7.com/api/lapp/device/ptz/mirror";
+      "https://open.ezvizlife.com/api/lapp/device/ptz/mirror";
 
   /// 设备能力集
   static const String devCapacity =
-      "https://open.ys7.com/api/lapp/device/capacity";
+      "https://open.ezvizlife.com/api/lapp/device/capacity";
 
   /// 开始云台控制
   static Future<YsResponseEntity> devPtzStart({

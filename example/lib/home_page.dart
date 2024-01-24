@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('萤石SDK功能测试')),
+      appBar: AppBar(title: const Text('EZVIZ SDK function test')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: Text(
-                '配网',
+                'Distribution network',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: Text(
-                '回放',
+                'Playback',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: Text(
-                '直播',
+                'live streaming',
                 style: TextStyle(fontSize: 16),
               ),
             ),

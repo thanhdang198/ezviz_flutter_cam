@@ -32,7 +32,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
      */
     init(messenger:FlutterBinaryMessenger){
         super.init()
-
+        
         /// 渠道实例化
         pwResult = FlutterBasicMessageChannel(name: Constants.PEI_WANG_CHANNEL, binaryMessenger: messenger,
                                             codec:FlutterStandardMessageCodec.sharedInstance())
@@ -77,7 +77,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             /// 初始化萤石SDK
             let data:Optional<Dictionary> = call.arguments as? Dictionary<String, String>
             if data != nil && data!["appKey"] != nil {
-                let isSuccess:Bool = EZOpenSDK.initLib(withAppKey: data!["appKey"]!)
+                let isSuccess:Bool = EZOpenSDK.initLib(withAppKey: data!["appKey"]!,url: "https://open.ezvizlife.com",authUrl: "https://openauth.ezvizlife.com")
                 print("\(TAG) SDK初始化 \(isSuccess ? "成功" : "失败")")
                 result(isSuccess)
             } else {
@@ -537,6 +537,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
     /// 注册播放器
     private func createEzPlayer(deviceSerial:String,cameraNo:Int?,verifyCode:String?) -> EZPlayer {
         let player = EZOpenSDK.createPlayer(withDeviceSerial: deviceSerial, cameraNo: cameraNo ?? 1)
+        
         if verifyCode != nil {
             player.setPlayVerifyCode(verifyCode)
         }

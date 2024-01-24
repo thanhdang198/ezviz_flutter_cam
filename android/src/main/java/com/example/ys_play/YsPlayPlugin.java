@@ -1,5 +1,8 @@
 package com.example.ys_play;
 
+import static com.videogo.openapi.EZOpenSDK.API_URL;
+import static com.videogo.openapi.EZOpenSDK.WEB_URL;
+
 import android.app.Application;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
@@ -25,6 +28,7 @@ import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZOpenSDK;
 import com.videogo.openapi.EZOpenSDKListener;
 import com.videogo.openapi.EZPlayer;
+import com.videogo.openapi.EzvizAPI;
 import com.videogo.openapi.bean.EZStorageStatus;
 import com.videogo.wificonfig.APWifiConfig;
 
@@ -99,14 +103,14 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                 EZOpenSDK.showSDKLog(BuildConfig.DEBUG);
                 String appKey = call.argument("appKey");
                 boolean initResult = EZOpenSDK.initLib(this.application, appKey);
-                LogUtils.d("萤石SDK初始化"+(initResult?"成功":"失败"));
+                LogUtils.d("EZVIZ SDK initialization"+(initResult?"Success":"Error"));
                 result.success(initResult);
                 break;
             /// 设置accessToken
             case "set_access_token":
                 String accessToken = call.argument("accessToken");
                 EZOpenSDK.getInstance().setAccessToken(accessToken);
-                LogUtils.d("token设置成功");
+                LogUtils.d("token set successfully");
                 result.success(true);
                 break;
             /// 开启回放
@@ -132,10 +136,10 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                     final Calendar endCalendar = Calendar.getInstance();
                     endCalendar.setTimeInMillis(endTime);
                     boolean isSuccess = ezPlayer.startPlayback(startCalendar, endCalendar);
-                    LogUtils.d("开启回放"+(isSuccess?"成功":"失败"));
+                    LogUtils.d("Start playback"+(isSuccess?"Success":"Error"));
                     result.success(isSuccess);
                 }else{
-                    LogUtils.d("startTime或endTime均不能为空");
+                    LogUtils.d("Neither startTime nor endTime can be empty");
                     result.success(false);
                 }
                 break;
@@ -143,7 +147,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
             case "pause_play_back":
                 if(ezPlayer != null){
                     boolean isPause = ezPlayer.pausePlayback();
-                    LogUtils.d("暂停回放"+(isPause?"成功":"失败"));
+                    LogUtils.d("Pause playback"+(isPause?"Success":"Error"));
                     result.success(isPause);
                 }else {
                     result.success(false);
@@ -153,7 +157,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
             case "resume_play_back":
                 if(ezPlayer != null){
                     boolean isResume = ezPlayer.resumePlayback();
-                    LogUtils.d("恢复回放"+(isResume?"成功":"失败"));
+                    LogUtils.d("Resume playback"+(isResume?"Success":"Error"));
                     result.success(isResume);
                 }else {
                     result.success(false);
@@ -163,7 +167,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
             case "stopPlayback":
                 if(ezPlayer != null){
                     boolean isSuccess = ezPlayer.stopPlayback();
-                    LogUtils.d("停止回放"+(isSuccess?"成功":"失败"));
+                    LogUtils.d("stopPlayback"+(isSuccess?"Success":"Error"));
                     result.success(isSuccess);
                 } else {
                     result.success(false);
@@ -185,14 +189,14 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                 ezPlayer = initEzPlayer(deviceSerial,verifyCode,cameraNo);
 
                 boolean realResult = ezPlayer.startRealPlay();
-                LogUtils.d("开始直播"+(realResult?"成功":"失败"));
+                LogUtils.d("startRealPlay"+(realResult?"Success":"Error"));
                 result.success(realResult);
                 break;
             /// 停止直播
             case "stopRealPlay":
                 if(ezPlayer != null){
                     boolean stopRealResult = ezPlayer.stopRealPlay();
-                    LogUtils.d("停止直播"+(stopRealResult?"成功":"失败"));
+                    LogUtils.d("stopRealPlay"+(stopRealResult?"Success":"Error"));
                     result.success(stopRealResult);
                 } else {
                     result.success(false);
@@ -254,7 +258,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
             case "stop_record":
                 if(ezPlayer==null) return;
                 boolean stopRecordResult = ezPlayer.stopLocalRecord();
-                LogUtils.d("停止录像"+(stopRecordResult?"成功":"失败"));
+                LogUtils.d("stop_record"+(stopRecordResult?"OK":"Err"));
                 result.success(stopRecordResult);
                 break;
             /// 设置视频清晰度
@@ -350,12 +354,12 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                 mode = call.argument("mode");
                 if(Objects.equals(mode, "wave") || Objects.equals(mode, "wifi")){
                   boolean stopConfigResult =  EZOpenSDK.getInstance().stopConfigWiFi();
-                    LogUtils.d("停止配网:"+(stopConfigResult?"成功":"失败"));
+                    LogUtils.d("stop_config:"+(stopConfigResult?"OK":"Err"));
                     result.success(stopConfigResult);
                 }else if(Objects.equals(mode,"ap")){
                     //热点
                     EZOpenSDK.getInstance().stopAPConfigWifiWithSsid();
-                    LogUtils.d("停止配网:成功");
+                    LogUtils.d("Stop network distribution: Success");
                     result.success(true);
                 }else{
                     result.success(false);
@@ -466,7 +470,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
     private EZPlayer initEzPlayer(String deviceSerial,String verifyCode,Integer cameraNo){
         int cNo = 1;
         if(cameraNo != null) cNo = cameraNo;
-
+        EzvizAPI.getInstance().setServerUrl("https://open.ezvizlife.com", "https://openauth.ezvizlife.com");
         EZPlayer player = EZOpenSDK.getInstance().createPlayer(deviceSerial, cNo);
         // 设置Handler, 该handler将被用于从播放器向handler传递消息
         player.setHandler(new YsPlayViewHandler(ysResultListener));
@@ -476,7 +480,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
         if(verifyCode != null){
             player.setPlayVerifyCode(verifyCode);
         }
-        LogUtils.d("播放器初始化成功");
+        LogUtils.d("Player initialization successful");
         return player;
     }
 
@@ -537,18 +541,18 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                                 if (status == EZConstants.EZWifiConfigStatus.DEVICE_WIFI_CONNECTED) {
                                     //设备wifi连接成功
                                     //停止Wifi配置
-                                    LogUtils.d("smart config——设备WiFi连接成功");
+                                    LogUtils.d("smart config——Device WiFi connection successful");
                                 } else if (status == EZConstants.EZWifiConfigStatus.DEVICE_PLATFORM_REGISTED) {
                                     //停止Wifi配置
                                     //设备注册到平台成功，可以调用添加设备接口添加设备
                                     entity.setIsSuccess(true);
-                                    entity.setMsg("设备配网成功");
-                                    LogUtils.d("smart config——设备注册成功");
+                                    entity.setMsg("Device network configuration successful");
+                                    LogUtils.d("smart config——Device registration successful");
                                     pwResult.send(new Gson().toJson(entity));
                                 } else {
                                     //错误回调
                                     if(status.code== EZConfigWifiErrorEnum.CONFIG_TIMEOUT.code){
-                                        status.description = "配网超时";
+                                        status.description = "Distribution network timeout";
                                     }
                                     entity.setIsSuccess(false);
                                     entity.setMsg(status.description);
@@ -581,7 +585,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                         if (code == EZConfigWifiInfoEnum.CONNECTED_TO_PLATFORM.code) {
                             PeiwangResultEntity entity = new PeiwangResultEntity();
                             entity.setIsSuccess(true);
-                            entity.setMsg("热点配网成功");
+                            entity.setMsg("Hotspot distribution network successful");
                             LogUtils.d("CONNECTED_TO_PLATFORM");
                             pwResult.send(new Gson().toJson(entity));
                             EZOpenSDK.getInstance().stopAPConfigWifiWithSsid();
@@ -596,30 +600,30 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
             new Thread(){
                 public void run(){
                     new Handler(Looper.getMainLooper()).post(() -> {
-                        LogUtils.d("配网失败");
+                        LogUtils.d("Network distribution failed");
                         PeiwangResultEntity entity = new PeiwangResultEntity();
                         entity.setIsSuccess(false);
                         switch (code) {
                             case 15:
-                                entity.setMsg("配网超时");
+                                entity.setMsg("Distribution network timeout");
                                 break;
                             case 1:
-                                entity.setMsg("参数错误");
+                                entity.setMsg("Parameter error");
                                 break;
                             case 2:
-                                entity.setMsg("设备ap热点密码错误");
+                                entity.setMsg("Device ap hotspot password is wrong");
                                 break;
                             case 3:
-                                entity.setMsg("连接ap热点异常");
+                                entity.setMsg("Abnormal connection to ap hotspot");
                                 break;
                             case 4:
-                                entity.setMsg("搜索WiFi热点错误");
+                                entity.setMsg("Search WiFi hotspot error");
                                 break;
                             case 506:
-                                entity.setMsg("用户主动取消热点配网");
+                                entity.setMsg("User actively cancels hotspot distribution network");
                                 break;
                             default:
-                                entity.setMsg("未知错误:"+code);
+                                entity.setMsg("unknown mistake:"+code);
                                 // 更多错误码请见枚举类 EZConfigWifiErrorEnum 相关说明
                                 break;
                         }

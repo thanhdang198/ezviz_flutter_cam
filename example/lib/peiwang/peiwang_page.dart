@@ -26,9 +26,9 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
   TextEditingController pwdController = TextEditingController();
   StreamSubscription? subscription;
   List<String> pwMethods = [
-    'WIFI配网',
-    '热点配网',
-    '声波配网',
+    'WIFI distribution network',
+    'Hotspot distribution network',
+    'Sonic distribution network',
   ];
 
   int pwPosition = 0;
@@ -61,7 +61,7 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
 
     ///配网结果监听
     YsPlay.peiwangResultListener((result) {
-      showToast(result.msg ?? '未知结果');
+      showToast(result.msg ?? 'Unknown result');
       LoadingHelper.dismiss(context);
     });
   }
@@ -123,7 +123,8 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
     );
 
     /// 底部提示文字
-    Widget reminderText = Text('提示:\n若设备指示灯红蓝交替闪烁，请选择WiFi配网。\n若设备指示灯蓝色闪烁，请选择设备热点配网。');
+    Widget reminderText = Text(
+        'Tip:\nIf the device indicator light flashes red and blue alternately, please select WiFi configuration. \nIf the device indicator light flashes blue, please select the device hotspot configuration network.');
 
     /// 选择网络按钮
     Widget selectWifiWidget = TextButton(

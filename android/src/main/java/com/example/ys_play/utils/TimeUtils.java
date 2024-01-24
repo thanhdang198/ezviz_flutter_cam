@@ -35,7 +35,7 @@ public class TimeUtils {
             format = "yyyy-MM-dd HH:mm:ss";
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINESE);
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
         Date date = null;
         try {
             date = sdf.parse(serverTime);

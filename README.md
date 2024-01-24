@@ -13,7 +13,7 @@ Flutter萤石云直播插件，支持Android和IOS
 8.对讲(包含半双工对讲和全双工对讲)  
 
 ## 准备工作
-集成之前，最好读一下[官方文档](http://open.ys7.com/help/36).
+集成之前，最好读一下[官方文档](http://open.ezvizlife.com/help/36).
 
 ## 安装
     dependencies: 
