@@ -1,3 +1,7 @@
+## 0.0.7
+- Upgrade Android SDK to 5.8
+- Upgrade iOS SDK to 5.8
+- Translate Log from Chinese to English
 ## 0.0.3
 
 * 新发布

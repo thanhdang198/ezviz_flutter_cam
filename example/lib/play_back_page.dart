@@ -73,7 +73,7 @@ class PlaybackPageState extends State<PlaybackPage> {
 
     /// 开始时间
     Widget stWidget = TimeSelector(
-      text: '开始时间',
+      text: 'Starting time',
       time: startDt,
       onSelected: (t) {
         startDt = t;
@@ -82,7 +82,7 @@ class PlaybackPageState extends State<PlaybackPage> {
 
     /// 结束时间
     Widget etWidget = TimeSelector(
-      text: '结束时间',
+      text: 'End Time',
       time: endDt,
       onSelected: (t) {
         endDt = t;
@@ -92,7 +92,7 @@ class PlaybackPageState extends State<PlaybackPage> {
     /// 回放按钮
     Widget playbackBtn = OutlinedButton(
       onPressed: onPlayback,
-      child: Text('回放'),
+      child: Text('Playback'),
     );
 
     YsPlayer ysPlayer = YsPlayer(
@@ -109,7 +109,7 @@ class PlaybackPageState extends State<PlaybackPage> {
 
     return showOtherUI
         ? Scaffold(
-            appBar: AppBar(title: Text('回放页面')),
+            appBar: AppBar(title: Text('Playback page')),
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -145,9 +145,10 @@ class PlaybackPageState extends State<PlaybackPage> {
       action: () async {
         bool result = await YsPlay.capturePicture();
         if (result) {
-          showToast('截屏已保存到手机相册，请到手机相册查看');
+          showToast(
+              'The screenshot has been saved to the mobile phone album. Please go to the mobile phone photo album to view it.');
         } else {
-          showToast('截屏失败');
+          showToast('Screen capture failed');
         }
       },
     );
@@ -162,13 +163,15 @@ class PlaybackPageState extends State<PlaybackPage> {
           bool result = await YsPlay.stopRecordWithFile();
           if (result) {
             isRecording = false;
-            showToast('录屏已结束,请到手机相册查看录制视频');
+            showToast(
+                'Screen recording has ended,Please go to the mobile phone album to view the recorded video');
           }
         } else {
           bool result = await YsPlay.startRecordWithFile();
           if (result) {
             isRecording = true;
-            showToast('录屏中...再次点击结束录屏');
+            showToast(
+                'Screen recording in progress...Click again to end screen recording');
           }
         }
         setState(() {});

@@ -34,19 +34,19 @@ class PanelPaint extends CustomPainter {
 
     Offset center = Offset(size.width / 2, size.height / 2); //中心点
 
-    // 外圆
+    // outer circle
     Rect outCircle = Rect.fromCircle(center: center, radius: outerRadius);
     canvas.drawArc(
         outCircle, 0.0, 2 * pi, false, paint..style = PaintingStyle.stroke);
 
-    // 内圆
+    // inner circle
     Rect innerCircle = Rect.fromCircle(center: center, radius: innerRadius);
     canvas.drawArc(innerCircle, 0.0, 2 * pi, false, paint);
 
-    /// 左侧扇形
-    /// 注：因为圆周的取值范围是-pi~pi.
-    /// 该区域的取值范围是3pi/4~5pi/4 超出上述范围。
-    /// 因此需要分段绘制。即:3pi/4~pi;-pi~-3pi/4
+    /// Left sector
+    /// Note: Because the value range of the circle is -pi~pi.
+    /// The value range of this area is 3pi/4~5pi/4, which is beyond the above range.
+    /// Therefore it needs to be drawn in segments. That is: 3pi/4~pi;-pi~-3pi/4
     SectorShape left = SectorShape(
       center: center,
       innerRadius: innerRadius,

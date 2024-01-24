@@ -9,8 +9,8 @@ class DialogUtil {
     String title, {
     required Widget content,
     bool noCancel = false,
-    String confirm = '确定',
-    String cancel = '取消',
+    String confirm = 'OK',
+    String cancel = 'Cancel',
     Function()? onTap,
   }) async {
     if (Platform.isIOS) {

@@ -96,6 +96,8 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.detached:
         break;
+      case AppLifecycleState.hidden:
+        break;
     }
   }
 
@@ -130,27 +132,28 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
     Widget selectWifiWidget = TextButton(
       onPressed: selectWifiHandle,
       child: Text(
-        '选择网络',
+        'Select network',
         style: TextStyle(color: Colors.blue),
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('设备配网'),
+        title: Text('Equipment distribution network'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: Column(
           children: [
-            field(ssidController, title: 'wifi名称', suffix: selectWifiWidget),
+            field(ssidController, title: 'wifi name', suffix: selectWifiWidget),
             SizedBox(height: 20),
-            field(pwdController, title: 'wifi密码'),
+            field(pwdController, title: 'wifi password'),
             SizedBox(height: 20),
-            Text('若无密码，可不输入。\n注:配网时请使用2g网络.'),
+            Text(
+                'If there is no password, you do not need to enter it. \nNote: Please use 2g network when distributing the network.'),
             SizedBox(height: 50),
             CupertinoButton.filled(
-              child: Text('下一步'),
+              child: Text('Next step'),
               onPressed: startConfigWifi,
             ),
             pwSelectWidget,
@@ -212,22 +215,22 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
   void deviceSerialField() async {
     await DialogUtil.showCommonDialog(
       context,
-      '请输入',
+      'please enter',
       noCancel: true,
       content: Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            field(deviceSerialController, title: '序列号'),
+            field(deviceSerialController, title: 'serial number'),
             SizedBox(height: 15),
-            field(verifyCodeController, title: '验证码'),
+            field(verifyCodeController, title: 'Verification code'),
           ],
         ),
       ),
       onTap: () {
         if (deviceSerialController.text.isEmpty) {
-          showToast('请输入序列号');
+          showToast('Please enter serial number');
           return;
         }
         Navigator.pop(context);
@@ -235,7 +238,7 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
     );
   }
 
-  /// 选择网络
+  /// Select network
   void selectWifiHandle() async {
     goSelectWifi = true;
     await AppSettings.openWIFISettings();
@@ -258,18 +261,19 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
   void startConfigWifi() {
     DialogUtil.showCommonDialog(
       context,
-      '提示',
+      'hint',
       content: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Text('请长按Reset键重置'),
+        child: Text('Please press and hold the Reset button to reset'),
       ),
       onTap: () async {
         Navigator.pop(context);
-        LoadingHelper.showDialogLoading(context, text: '配网中...');
+        LoadingHelper.showDialogLoading(context,
+            text: 'Distributing network...');
         //配网前先授权登录
         bool result = await YsPlay.setAccessToken(accessToken);
         if (!result) {
-          showToast('assessToken有误');
+          showToast('assessToken is wrong');
         }
 
         if (pwPosition == 1) {
@@ -306,7 +310,7 @@ class _PeiwangPageState extends State<PeiwangPage> with WidgetsBindingObserver {
           timer?.cancel();
           if (LoadingHelper.isLoading) {
             LoadingHelper.dismiss(context);
-            showToast("配网失败");
+            showToast("Network distribution failed");
           }
         }
       },

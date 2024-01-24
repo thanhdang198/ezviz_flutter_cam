@@ -34,13 +34,15 @@ class _ScreenRecordBtnState extends State<ScreenRecordBtn> {
           bool result = await YsPlay.stopRecordWithFile();
           if (result) {
             isRecording = false;
-            showToast('录屏已结束,请到手机相册查看录制视频');
+            showToast(
+                'Screen recording has ended,Please go to the mobile phone album to view the recorded video');
           }
         } else {
           bool result = await YsPlay.startRecordWithFile();
           if (result) {
             isRecording = true;
-            showToast('录屏中...再次点击结束录屏');
+            showToast(
+                'Screen recording in progress...Click again to end screen recording');
           }
         }
         setState(() {});

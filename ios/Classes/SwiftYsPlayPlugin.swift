@@ -12,7 +12,7 @@ import Photos
 public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
     
 
-    let TAG = "荧石SDK=======>"
+    let TAG = "EZVIZ-SDK=======>"
     
     var playerView:UIView? // 播放视图
  
@@ -78,7 +78,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             let data:Optional<Dictionary> = call.arguments as? Dictionary<String, String>
             if data != nil && data!["appKey"] != nil {
                 let isSuccess:Bool = EZOpenSDK.initLib(withAppKey: data!["appKey"]!,url: "https://open.ezvizlife.com",authUrl: "https://openauth.ezvizlife.com")
-                print("\(TAG) SDK初始化 \(isSuccess ? "成功" : "失败")")
+                print("\(TAG) SDK initialization \(isSuccess ? "Success" : "Fail")")
                 result(isSuccess)
             } else {
                 result(false)
@@ -88,7 +88,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             let data:Optional<Dictionary> = call.arguments as? Dictionary<String, String>
             if data != nil && data!["accessToken"] != nil {
                 EZOpenSDK.setAccessToken(data!["accessToken"]!)
-                print("\(TAG)accessToken设置成功")
+                print("\(TAG)accessToken set successfully")
                 result(true)
             }else{
                 result(false)
@@ -125,7 +125,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             recordFile.stopTime = endDate
             
             let bool = ezPlayer!.startPlayback(fromDevice: recordFile)
-            print("\(TAG)开始回放\(bool ? "成功" : "失败")")
+            print("\(TAG)Start playback\(bool ? "Success" : "Fail")")
             result(bool)
         } else if call.method == "pause_play_back"{
             /// 暂停回放
@@ -134,28 +134,28 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
                 return
             }
             let bool = ezPlayer!.pausePlayback()
-            print("\(TAG)暂停回放\(bool ? "成功" : "失败")")
+            print("\(TAG)Pause playback\(bool ? "Success" : "Error")")
             result(bool)
         } else if call.method == "resume_play_back"{
-            /// 恢复回放
+            /// Resume playback
             if ezPlayer == nil {
                 result(false)
                 return
             }
             let bool = ezPlayer!.resumePlayback()
-            print("\(TAG)恢复回放\(bool ? "成功" : "失败")")
+            print("\(TAG)Resume playback\(bool ? "Success" : "Error")")
             result(bool)
         } else if call.method == "stopPlayback" {
-            /// 停止回放
+            /// Stop playback
             if ezPlayer == nil {
                 result(false)
                 return
             }
             let bool = ezPlayer!.stopPlayback()
-            print("\(TAG)停止回放\(bool ? "成功" : "失败")")
+            print("\(TAG)Stop playback\(bool ? "Success" : "Error")")
             result(bool)
         } else if call.method == "startRealPlay" {
-            /// 开始直播
+            /// Start live broadcast
             if(ezPlayer != nil){
                 // 先停止
                 ezPlayer!.stopRealPlay();
@@ -175,34 +175,34 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             ezPlayer = createEzPlayer(deviceSerial: deviceSerial!, cameraNo: cameraNo, verifyCode: verifyCode)
 
             let isSuccess = ezPlayer!.startRealPlay()
-            print("\(TAG) 开始直播 \(isSuccess ? "成功" : "失败")")
+            print("\(TAG) Start live broadcast \(isSuccess ? "Success" : "Error")")
             result(isSuccess)
         } else if call.method == "stopRealPlay" {
-            /// 停止直播
+            /// Stop live broadcast
             if ezPlayer == nil {
                 result(false)
                 return
             }
             let isSuccess = ezPlayer!.stopRealPlay()
-            print("\(TAG) 停止直播 \(isSuccess ? "成功" : "失败")")
+            print("\(TAG) Stop live broadcast \(isSuccess ? "Success" : "Error")")
             result(isSuccess)
         }  else if call.method == "openSound"{
-            /// 打开声音
+            /// turn on sound
             if ezPlayer == nil {
                 result(false)
                 return
             }
             let bool = ezPlayer!.openSound()
-            print("\(TAG)打开声音\(bool ? "成功" : "失败")")
+            print("\(TAG)turn on sound\(bool ? "Success" : "Error")")
             result(bool)
         } else if call.method == "closeSound"{
-            /// 关闭声音
+            /// turn off sound
             if ezPlayer == nil {
                 result(false)
                 return
             }
             let bool = ezPlayer!.closeSound()
-            print("\(TAG)关闭声音\(bool ? "成功" : "失败")")
+            print("\(TAG)turn off sound\(bool ? "Success" : "Error")")
             result(bool)
         } else if call.method == "capturePicture"{
             /// 截屏
@@ -213,7 +213,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             let image =  ezPlayer!.capturePicture(10)
             if image != nil {
                 saveImage2Library(image: image!,callback:  {isSuccess in
-                    print("\(self.TAG)截屏\(isSuccess ? "成功" : "失败")")
+                    print("\(self.TAG)screenshot\(isSuccess ? "Success" : "Error")")
                     result(isSuccess)
                 })
             } else {
@@ -232,7 +232,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
                 let date = String(DateUtil.getCurrentTimeStamp())
                 self.videoPath = "\(documentDir ?? "")/\(date).mp4"
                 let isSuccess = self.ezPlayer!.startLocalRecord(withPathExt: self.videoPath)
-                print("\(self.TAG)录屏\(isSuccess ? "成功": "失败")")
+                print("\(self.TAG)Record screen\(isSuccess ? "Success": "Error")")
                 result(isSuccess)
             })
         } else if call.method == "stop_record"{
@@ -242,7 +242,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
                 return
             }
             ezPlayer!.stopLocalRecordExt({(isSuccess : Bool) in
-                print("\(self.TAG)停止录屏\(isSuccess ? "成功": "失败")")
+                print("\(self.TAG)Stop recording screen\(isSuccess ? "Success": "Error")")
                 if self.videoPath != nil {
                     self.saveVideo2Library(path: self.videoPath!, callback: {success in
                         result(success)
@@ -305,7 +305,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             EZOpenSDK.startConfigWifi(ssid ?? "", password: password ?? "", deviceSerial:deviceSerial ?? "",
                                       mode: configMode.rawValue,deviceStatus: wifiConfigStatus)
         } else if call.method == "stop_config" {
-            /// 停止配网
+            /// Stop distribution network
             let data:Optional<Dictionary> = call.arguments as? Dictionary<String, Any>
             var mode:String? = data?["mode"] as? String
             if mode == nil {
@@ -313,7 +313,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             }
             if mode == "wave" || mode == "wifi" {
                 let isSuccess:Bool = EZOpenSDK.stopConfigWifi()
-                print("\(TAG)停止配网\(isSuccess ? "成功" : "失败")")
+                print("\(TAG)Stop distribution network\(isSuccess ? "Success" : "Error")")
                 result(isSuccess)
             } else if mode == "ap" {
                 EZOpenSDK.stopAPConfigWifi()
@@ -352,7 +352,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             var isSuccess : Bool = true
             if _talkPlayer != nil {
                 isSuccess = _talkPlayer!.stopVoiceTalk()
-                print("\(self.TAG)结束对讲\(isSuccess ? "成功": "失败")")
+                print("\(self.TAG)End talk\(isSuccess ? "Success": "Error")")
                 _talkPlayer!.delegate = nil
                 _talkPlayer!.destoryPlayer()
                 _talkPlayer = nil
@@ -429,15 +429,15 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
         var dict = [String:Any]()
         switch messageCode {
         case 1:
-            print("\(TAG)直播开始")
+            print("\(TAG)Live broadcast starts")
             dict.updateValue(true, forKey: "isSuccess")
             break
         case 11:
-            print("\(TAG)回放开始")
+            print("\(TAG)Playback starts")
             dict.updateValue(true, forKey: "isSuccess")
             break
         case 4:
-            print("\(TAG)对讲开始")
+            print("\(TAG)Intercom starts")
             if _talkPlayer != nil {
                 //半双工设备需要设置
                 if supportTalk == 3{
@@ -453,7 +453,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
             dict.updateValue(true, forKey: "isSuccess")
             break
         case 5:
-            print("\(TAG)对讲结束")
+            print("\(TAG)Intercom ends")
             dict.updateValue(true, forKey: "isSuccess")
             break
         default: break
@@ -507,7 +507,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
         }){(success,error) in
             DispatchQueue.main.async {
                 if !success {
-                    print(">>>>>>>>>保存相册失败:\(String(describing: error))")
+                    print(">>>>>>>>>Failed to save album:\(String(describing: error))")
                 }
                 callback(success)
             }
@@ -543,7 +543,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
         }
         player.delegate = self
         player.setPlayerView(self.playerView)
-        print("\(TAG)注册播放器成功")
+        print("\(TAG)Player registration successful")
         return player
     }
     
@@ -553,7 +553,7 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
     lazy var apWifiConfigResult = { (isSuccess:Bool) in
         let entity:PeiwangResultEntity = PeiwangResultEntity()
         entity.isSuccess = isSuccess
-        entity.msg = isSuccess ? "AP配网成功" : "AP配网失败"
+        entity.msg = isSuccess ? "AP network distribution successful" : "AP network configuration failed"
         self.pwResult?.sendMessage(entity.getString())
         EZOpenSDK.stopConfigWifi()
     }
@@ -567,20 +567,20 @@ public class SwiftYsPlayPlugin: NSObject, FlutterPlugin,EZPlayerDelegate{
 
         switch(status){
         case .DEVICE_PLATFORM_REGISTED:
-            print("\(self.TAG)设备注册平台成功")
+            print("\(self.TAG)Device registration platform successful")
             entity.isSuccess = true
-            entity.msg = "注册平台成功"
+            entity.msg = "Registration platform successful"
             self.pwResult?.sendMessage(entity.getString())
             EZOpenSDK.stopConfigWifi()
             break
         case .DEVICE_WIFI_CONNECTING:
-            print("\(self.TAG)设备正在连接WiFi...")
+            print("\(self.TAG)The device is connecting to WiFi...")
             break
         case .DEVICE_WIFI_CONNECTED:
-            print("\(self.TAG)Wi-Fi连接成功")
+            print("\(self.TAG)Wi-Fi connection successful")
             break
          case .DEVICE_ACCOUNT_BINDED:
-             print("\(self.TAG)已绑定设备")
+             print("\(self.TAG)Device bound")
              break
 //         case .DEVICE_WIFI_SENT_SUCCESS:
 //             print("\(self.TAG)向设备发送WiFi信息成功")

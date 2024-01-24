@@ -51,7 +51,7 @@ class YsHttpApi {
         });
       }
     } catch (e) {
-      throw ("请求错误:${e.toString()}");
+      throw ("Request error:${e.toString()}");
     }
   }
 
@@ -82,7 +82,7 @@ class YsHttpApi {
         });
       }
     } catch (e) {
-      throw ("请求错误:${e.toString()}");
+      throw ("Request error:${e.toString()}");
     }
   }
 
@@ -110,7 +110,7 @@ class YsHttpApi {
         });
       }
     } catch (e) {
-      throw ("请求错误:${e.toString()}");
+      throw ("Request error:${e.toString()}");
     }
   }
 
@@ -138,7 +138,7 @@ class YsHttpApi {
         });
       }
     } catch (e) {
-      throw ("请求错误:${e.toString()}");
+      throw ("Request error:${e.toString()}");
     }
   }
 }

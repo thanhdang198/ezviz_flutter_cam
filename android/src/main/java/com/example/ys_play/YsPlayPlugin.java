@@ -397,7 +397,7 @@ public class YsPlayPlugin implements FlutterPlugin, MethodChannel.MethodCallHand
                boolean isSuccess = true;
                 if(talkPlayer != null){
                     isSuccess = talkPlayer.stopVoiceTalk();
-                    LogUtils.d("停止对讲"+(isSuccess?"成功":"失败"));
+                    LogUtils.d("stop_voice_talk"+(isSuccess?"Success":"Error"));
                     talkPlayer.release();
                     talkPlayer = null;
                 }

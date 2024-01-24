@@ -1,7 +1,7 @@
 class EZConstants {
-  ///监控回放：播放成功
+  ///Monitoring playback: playback successful
   static const int playBackSuccess = 205;
 
-  ///监控回放：播放失败
+  ///Monitoring playback: playback failed
   static const int playBackFailed = 206;
 }

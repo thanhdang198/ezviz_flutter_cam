@@ -53,17 +53,23 @@ class _RealPageState extends State<RealPage> {
     Widget buttonBars = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        IconButton(
-          onPressed: capturePicture,
-          icon: Image.asset('assets/icon_screen_shot.png'),
+        Expanded(
+          child: IconButton(
+            onPressed: capturePicture,
+            icon: Image.asset('assets/icon_screen_shot.png'),
+          ),
         ),
-        const ScreenRecordBtn(),
-        IntercomBtn(
-          onIntercom: (isTalking) => onIntercom(isTalking),
+        Expanded(child: const ScreenRecordBtn()),
+        Expanded(
+          child: IntercomBtn(
+            onIntercom: (isTalking) => onIntercom(isTalking),
+          ),
         ),
-        IconButton(
-          onPressed: onMirrorReverse,
-          icon: Image.asset('assets/icon_turn_over.png'),
+        Expanded(
+          child: IconButton(
+            onPressed: onMirrorReverse,
+            icon: Image.asset('assets/icon_turn_over.png'),
+          ),
         ),
       ],
     );
@@ -83,16 +89,17 @@ class _RealPageState extends State<RealPage> {
           onInnerIconClicked: onInnerIconClicked,
         ),
         SizedBox(height: 30),
-        Text('说明：长按方向键进行镜头移动，取消按键停止'),
+        Text(
+            'Description: Long press the direction key to move the camera, cancel the key to stop'),
       ],
     );
 
     if (isTalking) {
       String icon = 'assets/icon_talk.png';
-      String text = '长按说话，松开收听';
+      String text = 'Press and hold to speak, release to listen';
       if (isLongPressed) {
         icon = 'assets/icon_talk_select.png';
-        text = '对讲中...';
+        text = 'Talking...';
       }
 
       bodyWidget = Column(
@@ -127,7 +134,7 @@ class _RealPageState extends State<RealPage> {
 
     return showOtherUI
         ? Scaffold(
-            appBar: AppBar(title: Text('直播页面')),
+            appBar: AppBar(title: Text('Live page')),
             body: Column(
               children: [
                 ysPlayer,
@@ -146,9 +153,10 @@ class _RealPageState extends State<RealPage> {
       action: () async {
         bool result = await YsPlay.capturePicture();
         if (result) {
-          showToast('截屏已保存到手机相册，请到手机相册查看');
+          showToast(
+              'The screenshot has been saved to the mobile phone album. Please go to the mobile phone photo album to view it.');
         } else {
-          showToast('截屏失败');
+          showToast('Screen capture failed');
         }
       },
     );
@@ -159,7 +167,7 @@ class _RealPageState extends State<RealPage> {
     entity.command = 2;
     await YsPlay.ptzMirror(entity).then((value) {
       if (value.code != '200') {
-        showToast(value.msg ?? '未知异常');
+        showToast(value.msg ?? 'Unknown exception');
       }
     });
   }
@@ -185,7 +193,7 @@ class _RealPageState extends State<RealPage> {
         direction: entity.direction!,
       ).then((value) {
         if (value.code != '200') {
-          showToast(value.msg ?? '未知异常');
+          showToast(value.msg ?? 'Unknown exception');
         }
       });
     }
@@ -203,7 +211,7 @@ class _RealPageState extends State<RealPage> {
       if (value.code == '200') {
         result = true;
       } else {
-        showToast(value.msg ?? '未知异常');
+        showToast(value.msg ?? 'Unknown exception');
         result = false;
       }
     });
@@ -230,11 +238,11 @@ class _RealPageState extends State<RealPage> {
           if (res.data!.supportTalk == "1" || res.data!.supportTalk == "3") {
             supportTalk = int.parse(res.data!.supportTalk!);
           } else {
-            showToast('该设备不支持对讲');
+            showToast('This device does not support intercom');
             supportTalk = 0;
           }
         } else {
-          showToast(res.msg ?? '未知异常');
+          showToast(res.msg ?? 'Unknown exception');
           supportTalk = 0;
         }
       });
